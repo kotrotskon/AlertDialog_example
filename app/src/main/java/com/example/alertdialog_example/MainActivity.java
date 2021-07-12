@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,27 +23,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("This is the title");
-                builder.setMessage("This is tme message");
-                builder.setIcon(R.mipmap.magna);
-                builder.setCancelable(false);
-
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("ALERT", "No");
-                    }
-                });
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("ALERT", "Yes");
-                    }
-                });
+                builder.setView(R.layout.alert_dialog);
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
+                EditText edTxt_fname = alertDialog.findViewById(R.id.txtVw_fname);
+                EditText edTxt_lname = alertDialog.findViewById(R.id.txtVw_lname);
+
+                Button btn_save = alertDialog.findViewById(R.id.btn_save);
+                btn_save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(MainActivity.this, edTxt_fname.getText().toString() + edTxt_lname.getText().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                Button btn_cancel = alertDialog.findViewById(R.id.btn_cancel);
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.cancel();
+                    }
+                });
             }
         });
     }
